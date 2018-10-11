@@ -1,0 +1,164 @@
+{% extends 'head_side.html' %} {% block context %}
+
+<section class="content">
+  <div class="row">
+    <!-- left column --><!--/.col (left) -->
+    <!-- right column -->
+    <div class="col-md-12">
+      <!-- Horizontal Form -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">log list</h3>
+        </div>
+
+        <div class="box-body">
+
+          <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="check_table_1">
+                  <tbody>
+                  <tr >
+                    <td style="width:100px;">
+                      <label>show cloumns:</label>
+                    </td>
+                    <td style="width: 200px;">
+                      <input checked type="checkbox" class="toggle-vis" data-column="0" />id
+                    </td>
+                    <td  style="width: 200px;">
+                      <input checked type="checkbox" class="toggle-vis" data-column="1"/>user_name
+                    </td>
+                    <td style="width:200px;">
+                      <input checked type="checkbox" class="toggle-vis" data-column="2"/>role_name
+                    </td>
+                    <td style="width:200px;">
+                      <input checked type="checkbox" class="toggle-vis" data-column="3"/>ip
+                    </td>
+                    <td style="width:200px;">
+                      <input checked type="checkbox" class="toggle-vis" data-column="4"/>uri
+                    </td>
+                    <td style="width:200px;">
+                      <input checked type="checkbox" class="toggle-vis" data-column="5"/>method
+                    </td>
+                  </tr>
+                  <tr >
+                    <td style="width:200px;">
+
+                    </td>
+                    <td>
+                      <input checked type="checkbox" class="toggle-vis" data-column="6"/>status_code
+                    </td>
+                    <td>
+                      <input  type="checkbox" class="toggle-vis" data-column="7"/>params
+                    </td>
+                    <td>
+                      <input  type="checkbox" class="toggle-vis" data-column="8"/>description
+                    </td>
+                    <td>
+                      <input  type="checkbox" class="toggle-vis" data-column="9"/>insert_time
+                    </td>
+                    <td>
+                      <input checked type="checkbox" class="toggle-vis" data-column="10"/>remark
+                    </td>
+                    <td>
+                    </td>
+
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-sm-12">
+                <table id="example2" class="table table-bordered table-hover">
+
+                </table>
+
+              </div>
+
+            </div>
+
+          </div>
+          <!-- /.box-header -->
+
+        </div>
+      </div>
+      <!-- form start -->
+
+      <!-- /.box -->
+      <!-- general form elements disabled -->
+      <!-- /.box -->
+    </div>
+    <!--/.col (right) -->
+  </div>
+  <!-- /.row -->
+</section>
+
+{% endblock context %}
+{% block js %}
+<script>
+  var table;
+  $(document).ready(function () {
+    var columns = [
+      {
+        "sClass": "text-center",
+        "data": "pk",
+        "render": function (data, type, full, meta) {
+          return meta.row + 1 + meta.settings._iDisplayStart;
+        },
+        "title": 'id',
+        "bSortable": false
+      },
+      { "data": "fields.user_name", "title": 'user_name'},
+      { "data": "fields.role_name", "title": 'role_name'},
+      { "data": "fields.ip", "title": 'ip'},
+      { "data": "fields.uri", "title": 'uri'},
+      { "data": "fields.method", "title": 'method'},
+      { "data": "fields.status_code", "title": 'status_code' },
+      { "data": "fields.params", "title": 'params' },
+      { "data": "fields.description", "title": 'description' },
+      { "data": "fields.insert_time", "title": 'insert_time' },
+
+      { "data": "fields.remark", "title": 'remark' },
+
+    ];
+    table = $('#example2').DataTable({
+              'paging': true,
+              'lengthChange': true,
+              'bProcessing': true,
+              'serverSide': true,
+              'searching': false,
+              'ordering': true,
+              'info': true,
+              "sAjaxSource": "/base/log_list",
+              "fnServerData": function (sSource, aoData, fnCallback) {
+
+                $.ajax({
+                  "dataType": 'json',
+                  "type": "POST",
+                  "url": sSource,
+                  "data": aoData,
+                  "success": fnCallback
+
+                })
+              },
+              'autoWidth': false,
+              "columns": columns
+            }
+    );
+    table.column(7).visible(false);
+    table.column(8).visible(false);
+    table.column(9).visible(false);
+
+    $('.toggle-vis').on('change', function (e) {
+      e.preventDefault();
+      console.log($(this).attr('data-column'));
+      var column = table.column($(this).attr('data-column'));
+      column.visible(!column.visible());
+    });
+  });
+
+
+
+
+</script>
+<script src="../../dist/js/demo.js"></script>
+{% endblock %}

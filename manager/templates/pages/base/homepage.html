@@ -1,0 +1,335 @@
+<!-- Main content -->
+{% extends 'head_side.html' %} {% block context %}
+<section class="content">
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="col-md-4">
+                <!-- AREA CHART -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h4 class="box-title">
+                            <strong>安全资产</strong>
+                        </h4>
+                        <div class="box-tools pull-right">
+                            <span style="font-size:16px" class="label-primary">
+                                 &ensp;服务器端口信息&ensp;
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="box-body" style="display: block;">
+                        <table align="center">
+                            {{ assert_num|safe }}
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.box-body -->
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <!-- <div class="callout callout-danger"> -->
+                        <h4 class="box-title">
+                            <strong>漏洞管理</strong>
+                        </h4>
+                        <div class="box-tools pull-right">
+                            <span style="font-size:16px" class="label-primary">
+                                 &ensp;未修复漏洞汇总&ensp;
+                            </span>
+                        </div>
+                    </div>
+
+                        <!-- </div> -->
+                        <div class="box-body" style="display: block;">
+                            <table align="center">
+                                {{ leak_num|safe }}
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <!-- <div class="callout callout-danger"> -->
+                        <h4 class="box-title">
+                            <strong>安全报警</strong>
+                        </h4>
+                        <div class="box-tools pull-right">
+                            <span style="font-size:16px" class="label-primary">
+                                 &ensp;未处理报警汇总&ensp;
+                            </span>
+                        </div>
+                    </div>
+
+                        <!-- </div> -->
+                        <div class="box-body" style="display: block;">
+                            <table>
+                                {{ alert_num|safe }}
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" hidth="400px">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">监控工作状态 &emsp;
+
+                    </h3>
+                    <i class="fa fa-circle-o text-aqua">
+                    </i>
+                    <span>正常&emsp14;</span>
+
+                    <i class="fa fa-circle-o text-red">
+                    </i>
+                    <span>异常</span>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body" style="display: block;">
+                    {% if not monitor_status.router %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-red">
+                        </i>
+                        <span>router</span>
+                    </div>
+                    {% else %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-aqua">
+                        </i>
+                        <span>router</span>
+                    </div>
+                    {% endif %} {% if not monitor_status.brouter %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-red">
+                        </i>
+                        <span>brouter</span>
+
+                    </div>
+                    {% else %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-aqua">
+                        </i>
+                        <span>brouter</span>
+                    </div>
+                    {% endif %} {% if not monitor_status.ssh %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-red">
+                        </i>
+                        <span>ssh</span>
+                    </div>
+                    {% else %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-aqua">
+                        </i>
+                        <span>ssh</span>
+                    </div>
+                    {% endif %} {% if not monitor_status.audit %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-red">
+                        </i>
+                        <span>audit</span>
+                    </div>
+                    {% else %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-aqua">
+                        </i>
+                        <span>audit</span>
+                    </div>
+                    {% endif %} {% if not monitor_status.orouter %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-red">
+                        </i>
+                        <span>orouter</span>
+                    </div>
+                    {% else %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-aqua">
+                        </i>
+                        <span>orouter</span>
+                    </div>
+                    {% endif %} {% if not monitor_status.vpn %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-red">
+                        </i>
+                        <span>vpn</span>
+                    </div>
+                    {% else %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-aqua">
+                        </i>
+                        <span>vpn</span>
+                    </div>
+                    {% endif %} {% if not monitor_status.mysql %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-red">
+                        </i>
+                        <span>mysql</span>
+                    </div>
+                    {% else %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-aqua">
+                        </i>
+                        <span>mysql</span>
+                    </div>
+                    {% endif %} {% if not monitor_status.waf %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-red">
+                        </i>
+                        <span>waf</span>
+                    </div>
+                    {% else %}
+                    <div class="col-md-3">
+                        <i class="fa fa-circle-o text-aqua">
+                        </i>
+                        <span>waf</span>
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- AREA CHART -->
+            <div class="box box-primary">
+
+                <div class="box-body" style="display: block;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <input type="text" name="leak_range" class="form-control">
+                            </div>
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                    <div class="chart">
+                        <div id="leak" width="100%" style="height:400px"></div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- AREA CHART -->
+            <div class="box box-primary">
+                <div class="box-body" style="display: block;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <input type="text" name="alert_range" class="form-control">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                    </div>
+                    <div class="chart">
+                        <div id="alert" width="100%" style="height:400px"></div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+
+
+    </div>
+</section>
+{% endblock context %} {% block js %}
+<script src="../../plugins/echarts/echarts.min.js"></script>
+
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        //Date range picker
+        // $('.form-control').daterangepicker();
+        //Date range picker with time picker
+        $('.form-control').daterangepicker({
+            locale: {
+                format: 'Y/M/D'
+            },
+            timePicker: false,
+            startDate: moment().subtract(31, "days").format("Y/M/D"),
+            endDate: moment().format("Y/M/D")
+        },
+            function (start, end) {
+                // $('#daterange-btn span').html(start + '-' + end);
+            });
+
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        });
+
+
+    });
+    // 基于准备好的dom，初始化echarts图表
+    ec = echarts
+    // 为echarts对象加载数据 
+    // $.ajax({
+    //     dataType: 'json',
+    //     type: "post",
+    //     async: true,
+    //     url: "/base/graph",
+    //     data: { 'graph_type': 'leak' },
+    //     success: function (result) {
+    //         // console.log(result.leak_option)
+    //         // console.log(typeof result)
+    //         leak.setOption(result.leak_option)
+    //     }
+    // })
+
+    $('[name=leak_range]').on("change", function (e) {
+        $.ajax({
+            dataType: "json",
+            type: "post",
+            async: true,
+            url: "/base/graph",
+            data: { 'graph_type': 'leak', 'date_range': $('[name=leak_range]').val() },
+            success: function (result) {
+                var leak = ec.init(document.getElementById('leak'))
+                leak.setOption(result.leak_option)
+            }
+        })
+    })
+    $('[name=alert_range]').on("change", function (e) {
+        $.ajax({
+            dataType: "json",
+            type: "post",
+            async: true,
+            url: "/base/graph",
+            data: { 'graph_type': 'alert', 'date_range': $('[name=alert_range]').val() },
+            success: function (result) {
+                var alert = ec.init(document.getElementById('alert'))
+                alert.setOption(result.alert_option)
+            }
+        })
+    })
+
+</script> {% endblock %}

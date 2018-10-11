@@ -1,0 +1,70 @@
+{% extends 'head_side.html' %} {% block context %}
+
+<section class="content">
+  <div class="row">
+    <!-- left column --><!--/.col (left) -->
+    <!-- right column -->
+    <div class="col-md-6">
+      <!-- Horizontal Form -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Add User</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form action="/base/user_add" method="post">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
+
+              <div class="col-sm-10">
+                <input type="text" name="user_name" class="form-control" id="inputEmail3" placeholder="username">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+
+              <div class="col-sm-10">
+                <input name="user_pass" class="form-control" id="inputPassword3" placeholder="Password">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Role</label>
+
+              <div class="col-sm-10">
+                <select id = "user_role" name="role_id" aria-controls="example1" class="form-control input-sm">
+                  <option  id='1' value="1" >user</option>
+                  <option id='2' value="2">group manager</option>
+                  <option id='3' value="3">admin</option></select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Group</label>
+
+              <div class="col-sm-10">
+                <select id = "user_group" name="group_id" aria-controls="example1" class="form-control input-sm">
+                  {% for group_one in group %}
+                  <option value = "{{group_one.id}}">{{group_one.name}}</option>
+                {% endfor %}</select>
+              </div>
+            </div>
+
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-info pull-right">Submit</button>
+          </div>
+          <!-- /.box-footer -->
+        </form>
+      </div>
+      <!-- /.box -->
+      <!-- general form elements disabled -->
+      <!-- /.box -->
+    </div>
+    <!--/.col (right) -->
+  </div>
+  <!-- /.row -->
+</section>
+
+{% endblock context %}

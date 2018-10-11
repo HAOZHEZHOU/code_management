@@ -1,0 +1,195 @@
+{% extends 'head_side.html' %} {% block context %}
+
+<section class="content">
+  <div class="row">
+    <!-- left column --><!--/.col (left) -->
+    <!-- right column -->
+    <div class="col-md-12">
+      <!-- Horizontal Form -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">User list</h3>
+        </div>
+
+      <div class="box-body">
+
+
+        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+          <div class="row">
+            <div class="col-sm-12" id="select_area">
+              <button class="btn btn-default btn-sm" onclick="change_modal('','','','')" data-toggle="modal" data-target="#newly_add">
+                <i class="fa fa-fw fa-plus"></i>add user</button>&nbsp;&nbsp;
+            </div>
+
+            <div class="col-sm-12">
+              <table id="example2" class="table table-bordered table-hover">
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </div>
+        <!-- /.box-header -->
+
+      </div>
+        </div>
+        <!-- form start -->
+        <div class="modal fade" id="newly_add">
+          <div class="modal-dialog">
+            <div class="modal-content">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="real_name" class="col-sm-2 control-label">real_name</label>
+              <div class="col-sm-10">
+                <input type="text" id="real_name" name="real_name" class="form-control" placeholder="real_name">
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="hidden" name="id" id="user_id">
+              <label for="user_name" class="col-sm-2 control-label">Username</label>
+              <div class="col-sm-10">
+                <input type="text" id="user_name" name="user_name" class="form-control" placeholder="username">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="user_pass" class="col-sm-2 control-label">Password</label>
+
+              <div class="col-sm-10">
+                <input name="user_pass" class="form-control" id="user_pass" placeholder="Password">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="user_role" class="col-sm-2 control-label">Role</label>
+
+              <div class="col-sm-10">
+                <select id = "user_role" name="role_id" aria-controls="example1" class="form-control input-sm">
+                      {% for role_one in role %}
+                      <option value = "{{role_one.id}}">{{role_one.role_name}}</option>
+                      {% endfor %}</select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="user_leader" class="col-sm-2 control-label">leader</label>
+
+              <div class="col-sm-10">
+                <select id = "user_leader" name="user_leader" aria-controls="example1" class="form-control input-sm">
+                  {% for user_one in user %}
+                  <option value = "{{user_one.user_name}}">{{user_one.user_name}}</option>
+                {% endfor %}</select>
+              </div>
+            </div>
+
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button onclick="user_add()" type="submit" class="btn btn-info pull-right">Submit</button>
+            </div>
+          <!-- /.box-footer -->
+              </div>
+            </div>
+          </div>
+
+      <!-- /.box -->
+      <!-- general form elements disabled -->
+      <!-- /.box -->
+    </div>
+    <!--/.col (right) -->
+  </div>
+  <!-- /.row -->
+</section>
+
+{% endblock context %}
+{% block js %}
+<script>
+  var table;
+  $(document).ready(function () {
+    var columns = [
+
+      {
+        "sClass": "text-center",
+        "data": "pk",
+        "render": function (data, type, full, meta) {
+          return meta.row + 1 + meta.settings._iDisplayStart;
+        },
+        "title": 'id',
+        "bSortable": false
+      },
+      { "data": "fields.user_name", "title":'user_name'},
+      { "data": "fields.real_name", "title":'real_name'},
+      { "data": "fields.role_name", "title": 'role_name' },
+      { "data": "fields.update_time", "title": 'update_time' },
+      { "data": "fields.leader_name", "title": 'leader_name'},
+
+    {
+      "sClass": "text-center",
+            "data": "fields",
+            "title": "operate",
+            "render": function (data, type, full, meta) {
+      label = '<button type="button" class="btn btn-danger" onclick="var a = confirm(\'delete?\');if(a){delete_one(\'/base/del_user\',\'' + data.user_name + '\');}else{return;}"><i class="fa fa-remove"></i>delete</button>';
+      label += ' <button type="button" onclick="change_modal(\'' + data.user_name +'\',\'' + data.real_name +'\',\'' + data.role_name +'\',\'' + data.leader_name +'\')" class="btn btn-default" data-toggle="modal" data-target="#newly_add"> <i class="fa fa-edit"></i> edit </button>';
+      return label;
+    },
+      "bSortable": false
+    }
+    ];
+    table = $('#example2').DataTable({
+              'paging': true,
+              'lengthChange': true,
+              'bProcessing': true,
+              'serverSide': true,
+              'searching': false,
+              'ordering': true,
+              'info': true,
+              "sAjaxSource": "/base/user_list",
+              "fnServerData": function (sSource, aoData, fnCallback) {
+
+                $.ajax({
+                  "dataType": 'json',
+                  "type": "POST",
+                  "url": sSource,
+                  "data": aoData,
+                  "success": fnCallback
+
+                })
+              },
+              'autoWidth': false,
+              "columns": columns
+            }
+    );
+  });
+
+  function user_add(){
+    user_name = document.getElementById('user_name').value;
+    user_pass = document.getElementById('user_pass').value;
+    user_role = document.getElementById('user_role').value;
+    user_leader = document.getElementById('user_leader').value;
+    real_name = document.getElementById('real_name').value;
+
+    $.post('/base/add_user',{"user_name":user_name,"real_name":real_name,"user_pass":user_pass,"user_role":user_role,"user_leader":user_leader},function(data){
+      alert('success');
+      var url = table.ajax.url("/base/user_list");
+      url.load();
+
+    });
+  }
+  function delete_one(user_name){
+    $.post('/base/del_user',{"user_name":user_name},function(data){
+      if("success" == data.status){
+        var url = table.ajax.url("/base/user_list");
+        url.load();
+      }
+    });
+  }
+  function change_modal(user_name,real_name,role_name,group_name){
+    document.getElementById("user_name").value = user_name;
+    document.getElementById("real_name").value = real_name;
+//    document.getElementById("user_pass").value = user_pass;
+    document.getElementById("user_leader").value = group_name;
+    document.getElementById("role_name").value = role_name;
+  }
+  </script>
+<script src="../../dist/js/demo.js"></script>
+{% endblock %}

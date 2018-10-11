@@ -1,0 +1,144 @@
+{% extends 'head_side.html' %} {% block context %}
+
+<section class="content">
+    <div class="row">
+        <!-- left column --><!--/.col (left) -->
+        <!-- right column -->
+        <div class="col-md-12">
+            <!-- Horizontal Form -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Group list</h3>
+                </div>
+
+                <div class="box-body">
+
+
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-12" id="select_area">
+                                <button class="btn btn-default btn-sm" onclick="change_modal('')" data-toggle="modal" data-target="#newly_add">
+                                    <i class="fa fa-fw fa-plus"></i>add group</button>&nbsp;&nbsp;
+                            </div>
+
+                            <div class="col-sm-12">
+                                <table id="example2" class="table table-bordered table-hover">
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.box-header -->
+
+                </div>
+            </div>
+            <!-- form start -->
+            <div class="modal fade" id="newly_add">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="/base/group_add" method="post">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Group Name</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" id="group_name" name="group_name" class="form-control" placeholder="group name">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-info pull-right">Submit</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.box -->
+            <!-- general form elements disabled -->
+            <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+    </div>
+    <!-- /.row -->
+</section>
+
+{% endblock context %}
+{% block js %}
+<script>
+    var table;
+    $(document).ready(function () {
+        var columns = [
+
+            {
+                "sClass": "text-center",
+                "data": "pk",
+                "render": function (data, type, full, meta) {
+                    return meta.row + 1 + meta.settings._iDisplayStart;
+                },
+                "title": 'id',
+                "bSortable": false
+            },
+            { "data": "fields.update_time", "title": 'update_time' },
+            { "data": "fields.group_name", "title": 'group_name'},
+
+            {
+                "sClass": "text-center",
+                "data": "pk",
+                "title": "operate",
+                "render": function (data, type, full, meta) {
+                    label = '<button type="button" class="btn btn-danger" onclick="var a = confirm(\'delete?\');if(a){delete_one(\'' + data + '\');}else{return;}"><i class="fa fa-remove"></i>delete</button>';
+                    return label;
+                },
+                "bSortable": false
+            }
+        ];
+        table = $('#example2').DataTable({
+                    'paging': true,
+                    'lengthChange': true,
+                    'bProcessing': true,
+                    'serverSide': true,
+                    'searching': false,
+                    'ordering': true,
+                    'info': true,
+                    "sAjaxSource": "/base/group_list",
+                    "fnServerData": function (sSource, aoData, fnCallback) {
+
+                        $.ajax({
+                            "dataType": 'json',
+                            "type": "POST",
+                            "url": sSource,
+                            "data": aoData,
+                            "success": fnCallback
+
+                        })
+                    },
+                    'autoWidth': false,
+                    "columns": columns
+                }
+        );
+    });
+
+    function delete_one(group_id){
+        $.post('/base/group_delete',{"group_id":group_id},function(data){
+            if("success" == data.status){
+                var url = table.ajax.url("/base/group_list");
+                url.load();
+            }
+        });
+    }
+    function change_modal(user_name,user_pass,role_name,group_name){
+        document.getElementById("user_name").value = user_name;
+        document.getElementById("user_pass").value = user_pass;
+        document.getElementById("user_group").value = role_name;
+        document.getElementById("role_name").value = group_name;
+    }
+</script>
+<script src="../../dist/js/demo.js"></script>
+{% endblock %}

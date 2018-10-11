@@ -1,0 +1,186 @@
+{% extends 'head_side.html' %} {% block context %}
+
+<section class="content">
+  <div class="row">
+    <!-- left column --><!--/.col (left) -->
+    <!-- right column -->
+    <div class="col-md-12">
+      <!-- Horizontal Form -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Project list</h3>
+        </div>
+
+        <div class="box-body">
+
+
+          <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row">
+              <div class="col-sm-12" id="select_area">
+                <button class="btn btn-default btn-sm" onclick="change_modal('','','')" data-toggle="modal" data-target="#newly_add">
+                  <i class="fa fa-fw fa-plus"></i>add project</button>&nbsp;&nbsp;
+              </div>
+
+              <div class="col-sm-12">
+                <table id="example2" class="table table-bordered table-hover">
+
+                </table>
+
+              </div>
+
+            </div>
+
+          </div>
+          <!-- /.box-header -->
+
+        </div>
+      </div>
+      <!-- form start -->
+
+      <div class="modal fade" id="newly_add">
+        <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="project_name" class="col-sm-2 control-label">Project&nbsp;Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="project_name" class="form-control" id="project_name" placeholder="username">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="project_owner"   class="col-sm-2 control-label">Project&nbsp;Owner</label>
+                  <div id="project_owner" class="col-sm-10">
+
+                    {% for user_one in user %}
+                    <input type="checkbox" name="project_owner" value = "{{user_one.id}}">{{user_one.user_name}}</option>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="project_name"  class="col-sm-2 control-label">Project&nbsp;Intro</label>
+
+                  <div class="col-sm-10">
+                    <textarea id="project_intro" name="project_intro" ></textarea>
+                  </div>
+                </div>
+
+
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button onclick="project_add()" type="submit" class="btn btn-info pull-right">Submit</button>
+              </div>
+              <!-- /.box-footer -->
+          </div>
+        </div>
+      </div>
+
+      <!-- /.box -->
+      <!-- general form elements disabled -->
+      <!-- /.box -->
+    </div>
+    <!--/.col (right) -->
+  </div>
+  <!-- /.row -->
+</section>
+
+{% endblock context %}
+{% block js %}
+<script>
+  var table;
+  $(document).ready(function () {
+    var columns = [
+
+      {
+        "sClass": "text-center",
+        "data": "pk",
+        "render": function (data, type, full, meta) {
+          return meta.row + 1 + meta.settings._iDisplayStart;
+        },
+        "title": 'id',
+        "bSortable": false
+      },
+      { "data": "fields.project_id", "title": 'project_id'},
+      { "data": "fields.project_name", "title": 'project_name'},
+      { "data": "fields.project_intro", "title": 'project_intro'},
+      { "data": "fields.project_owner", "title": 'project_owner'},
+      { "data": "fields.project_creator", "title": 'project_creator'},
+      { "data": "fields.update_time", "title": 'update_time' },
+
+      {
+        "sClass": "text-center",
+        "data": "fields",
+        "title": "operate",
+        "render": function (data, type, full, meta) {
+          label = '<button type="button" class="btn btn-danger" onclick="var a = confirm(\'delete?\');if(a){delete_one(\'' + data.project_name + '\');}else{return;}"><i class="fa fa-remove"></i>delete</button>';
+
+          return label;
+        },
+        "bSortable": false
+      }
+    ];
+    table = $('#example2').DataTable({
+              'paging': true,
+              'lengthChange': true,
+              'bProcessing': true,
+              'serverSide': true,
+              'searching': false,
+              'ordering': true,
+              'info': true,
+              "sAjaxSource": "/code/project_list",
+              "fnServerData": function (sSource, aoData, fnCallback) {
+
+                $.ajax({
+                  "dataType": 'json',
+                  "type": "POST",
+                  "url": sSource,
+                  "data": aoData,
+                  "success": fnCallback
+
+                })
+              },
+              'autoWidth': false,
+              "columns": columns
+            }
+    );
+  });
+
+  function delete_one(project_name){
+    $.post('/code/del_project',{"project_name":project_name},function(data){
+      if("success" == data.status){
+        alert('success');
+        var url = table.ajax.url("/code/project_list");
+        url.load();
+      }
+    });
+  }
+
+  function project_add(){
+    project_name = document.getElementById("project_name").value;
+    project_owners  = document.getElementsByName("project_owner");
+    project_owner = [];
+    for(i in project_owners){
+      if(project_owners[i] != undefined && project_owners[i].checked){
+        project_owner.push(project_owners[i].value);
+      }
+    }
+    p_o = project_owner.join(",")
+    project_intro = document.getElementById("project_intro").value;
+    $.post('/code/add_project',{"project_name":project_name,"project_owner":p_o,"project_intro":project_intro},function(data){
+      if("success" == data.status){
+        var url = table.ajax.url("/code/project_list");
+        url.load();
+      }
+    });
+
+  }
+
+  function change_modal(project_name,project_owner,project_intro){
+    document.getElementById("project_name").value = project_name;
+    document.getElementById("project_owner").value = project_owner;
+    document.getElementById("project_intro").value = project_intro;
+  }
+</script>
+<script src="../../dist/js/demo.js"></script>
+{% endblock %}

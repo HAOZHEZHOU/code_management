@@ -1,0 +1,264 @@
+{% extends 'head_side.html' %} {% block context %}
+
+<!-- Main content -->
+        <section class="content">
+
+            <!-- /.row -->
+
+
+
+            <!-- Main row -->
+            <div class="row">
+                <!-- Left col -->
+                <div class="col-md-8">
+                    <!-- MAP & BOX PANE -->
+                    <!-- /.box -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- DIRECT CHAT -->
+                            <div class="box box-warning direct-chat direct-chat-warning">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Direct Chat</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <span id="new_message_count" data-toggle="tooltip"  class="badge bg-yellow"></span>
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts"
+                                                data-widget="chat-pane-toggle">
+                                            <i class="fa fa-comments"></i></button>
+                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <!-- Conversations are loaded here -->
+                                    <div id="direct-chat-messages" class="direct-chat-messages">
+                                        <!-- Message. Default to the left -->
+
+                                    </div>
+                                    <!--/.direct-chat-messages-->
+
+                                    <!-- Contacts are loaded here -->
+                                    <div class="direct-chat-contacts">
+                                        <ul id="contacts-list" class="contacts-list">
+
+                                            <!--&lt;!&ndash; End Contact Item &ndash;&gt;-->
+                                            <!--<li>-->
+                                                <!--<a href="#">-->
+                                                    <!--<img class="contacts-list-img" src="dist/img/user7-128x128.jpg" alt="User Image">-->
+
+                                                    <!--<div class="contacts-list-info">-->
+                                <!--<span class="contacts-list-name">-->
+                                  <!--Sarah Doe-->
+                                  <!--<small class="contacts-list-date pull-right">2/23/2015</small>-->
+                                <!--</span>-->
+                                                        <!--<span class="contacts-list-msg">I will be waiting for...</span>-->
+                                                    <!--</div>-->
+                                                    <!--&lt;!&ndash; /.contacts-list-info &ndash;&gt;-->
+                                                <!--</a>-->
+                                            <!--</li>-->
+                                            <!--&lt;!&ndash; End Contact Item &ndash;&gt;-->
+                                            <!--<li>-->
+                                                <!--<a href="#">-->
+                                                    <!--<img class="contacts-list-img" src="dist/img/user3-128x128.jpg" alt="User Image">-->
+
+                                                    <!--<div class="contacts-list-info">-->
+                                <!--<span class="contacts-list-name">-->
+                                  <!--Nadia Jolie-->
+                                  <!--<small class="contacts-list-date pull-right">2/20/2015</small>-->
+                                <!--</span>-->
+                                                        <!--<span class="contacts-list-msg">I'll call you back at...</span>-->
+                                                    <!--</div>-->
+                                                    <!--&lt;!&ndash; /.contacts-list-info &ndash;&gt;-->
+                                                <!--</a>-->
+                                            <!--</li>-->
+                                            <!--&lt;!&ndash; End Contact Item &ndash;&gt;-->
+                                            <!--<li>-->
+                                                <!--<a href="#">-->
+                                                    <!--<img class="contacts-list-img" src="dist/img/user5-128x128.jpg" alt="User Image">-->
+
+                                                    <!--<div class="contacts-list-info">-->
+                                <!--<span class="contacts-list-name">-->
+                                  <!--Nora S. Vans-->
+                                  <!--<small class="contacts-list-date pull-right">2/10/2015</small>-->
+                                <!--</span>-->
+                                                        <!--<span class="contacts-list-msg">Where is your new...</span>-->
+                                                    <!--</div>-->
+                                                    <!--&lt;!&ndash; /.contacts-list-info &ndash;&gt;-->
+                                                <!--</a>-->
+                                            <!--</li>-->
+                                            <!--&lt;!&ndash; End Contact Item &ndash;&gt;-->
+                                            <!--<li>-->
+                                                <!--<a href="#">-->
+                                                    <!--<img class="contacts-list-img" src="dist/img/user6-128x128.jpg" alt="User Image">-->
+
+                                                    <!--<div class="contacts-list-info">-->
+                                <!--<span class="contacts-list-name">-->
+                                  <!--John K.-->
+                                  <!--<small class="contacts-list-date pull-right">1/27/2015</small>-->
+                                <!--</span>-->
+                                                        <!--<span class="contacts-list-msg">Can I take a look at...</span>-->
+                                                    <!--</div>-->
+                                                    <!--&lt;!&ndash; /.contacts-list-info &ndash;&gt;-->
+                                                <!--</a>-->
+                                            <!--</li>-->
+                                            <!--&lt;!&ndash; End Contact Item &ndash;&gt;-->
+                                            <!--<li>-->
+                                                <!--<a href="#">-->
+                                                    <!--<img class="contacts-list-img" src="dist/img/user8-128x128.jpg" alt="User Image">-->
+
+                                                    <!--<div class="contacts-list-info">-->
+                                <!--<span class="contacts-list-name">-->
+                                  <!--Kenneth M.-->
+                                  <!--<small class="contacts-list-date pull-right">1/4/2015</small>-->
+                                <!--</span>-->
+                                                        <!--<span class="contacts-list-msg">Never mind I found...</span>-->
+                                                    <!--</div>-->
+                                                    <!--&lt;!&ndash; /.contacts-list-info &ndash;&gt;-->
+                                                <!--</a>-->
+                                            <!--</li>-->
+                                            <!-- End Contact Item -->
+                                        </ul>
+                                        <!-- /.contatcts-list -->
+                                    </div>
+                                    <!-- /.direct-chat-pane -->
+                                </div>
+                                <!-- /.box-body -->
+                                <div class="box-footer">
+                                        <div class="input-group">
+                                            <input type="hidden" id="to_user" name="to_user" value="">
+                                            <input type="text" id="message_content" name="message" placeholder="Type Message ..." class="form-control">
+                      <span class="input-group-btn">
+                            <button type="button" onclick="send_msg()"  class="btn btn-warning btn-flat">Send</button>
+                          {% if request.session.user_role == 'admin' %}
+                          <button type="button" onclick="send_msg_all()"  class="btn btn-warning btn-flat">Send all</button>
+                          {% endif %}
+                          </span>
+                                        </div>
+                                </div>
+                                <!-- /.box-footer-->
+                            </div>
+                            <!--/.direct-chat -->
+                        </div>
+                        <!-- /.col -->
+
+
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <!-- TABLE: LATEST ORDERS -->
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+        {% endblock context %}
+{% block js %}
+<script>
+    $(document).ready(function () {
+        contract_list();
+        change_new_message_count();
+    });
+
+    function change_message_content(from_user){
+        $.post('/base/read_message',{"from_user":from_user},function(data){
+            content = '';
+            for(i in data){
+
+                if(data[i].fields.from_user == from_user){
+                    content += '<div class="direct-chat-msg right">'+
+                    '<div class="direct-chat-info clearfix">'+
+                    '<span class="direct-chat-name pull-right">'+from_user+'</span>'+
+                    '<span class="direct-chat-timestamp pull-left">'+data[i].fields.create_time+'</span>'+
+                    '</div>'+
+                        '<!-- /.direct-chat-info -->'+
+                    '<img class="direct-chat-img" src="/dist/img/user2-160x160.png" alt="message user image">'+
+                        '<!-- /.direct-chat-img -->'+
+                    '<div class="direct-chat-text">'
+                    +data[i].fields.message_content+
+                    '</div>'+
+                        '<!-- /.direct-chat-text -->'+
+                    '</div>';
+                } else if(data[i].fields.from_user == '{{request.session.user_name}}'){
+                    content+='<div class="direct-chat-msg">'+
+                    '<div class="direct-chat-info clearfix">'+
+                    '<span class="direct-chat-name pull-left">'+data[i].fields.from_user+'</span>'+
+                    '<span class="direct-chat-timestamp pull-right">'+data[i].fields.create_time+'</span>'+
+                    '</div>'+
+                        '<!-- /.direct-chat-info -->'+
+                    '<img class="direct-chat-img" src="/dist/img/user2-160x160.png" alt="message user image">'+
+                        '<!-- /.direct-chat-img -->'+
+                    '<div class="direct-chat-text">'
+                    +data[i].fields.message_content+
+                    '</div>'+
+                        '<!-- /.direct-chat-text -->'+
+                    '</div>';
+                }
+            }
+            document.getElementById("direct-chat-messages").innerHTML = content;
+            document.getElementById('to_user').value = from_user;
+        });
+
+    }
+
+    function contract_list(){
+        $.get('/base/message_list',function(data){
+            content = '';
+            for(i in data){
+
+                content += '<li>'+
+                '<a href="#" onclick="change_message_content(\''+data[i].fields.user_name+'\')">'+
+                '<img class="contacts-list-img" src="/dist/img/user2-160x160.png" alt="User Image">'+
+
+                '<div class="contacts-list-info">'+
+                '<span class="contacts-list-name">'
+                +data[i].fields.user_name+
+            '</span>'+
+            '</div>'+
+                '<!-- /.contacts-list-info -->'+
+            '</a>'+
+            '</li>';
+            }
+            document.getElementById("contacts-list").innerHTML = content;
+        });
+    }
+
+    setInterval(function(){
+        contract_list();
+        change_new_message_count();
+    },5000);
+    function change_new_message_count(){
+        $.get('/base/new_message_count',function(data){
+            document.getElementById('new_message_count').title = data.count+' new messages';
+            document.getElementById('new_message_count').innerText = data.count;
+        });
+    }
+
+    function send_msg(){
+        to_user = document.getElementById('to_user').value;
+        message_content = document.getElementById('message_content').value;
+        $.post('/base/send_message',{"to_user":to_user,"message_content":message_content},function(data){
+            if(data.status == 'success'){
+                change_message_content(to_user);
+            }
+        });
+    }
+
+    function send_msg_all(){
+        to_user = document.getElementById('to_user').value;
+        message_content = document.getElementById('message_content').value;
+        $.post('/base/send_message',{"to_user":"all","message_content":message_content},function(data){
+            change_message_content(to_user);
+        })
+    }
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'head_side.html' %} {% block context %}
+
+<section class="content">
+  <div class="row">
+    <!-- left column --><!--/.col (left) -->
+    <!-- right column -->
+    <div class="col-md-6">
+      <!-- Horizontal Form -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Add Project</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form action="/code/project_add" method="post">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Project Name</label>
+
+              <div class="col-sm-10">
+                <input type="text" name="project_name" class="form-control" id="inputEmail3" placeholder="username">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Project Group</label>
+
+              <div class="col-sm-10">
+
+                {% for project in projects %}
+                <input type="checkbox" name="project_owner" value = "{{project.project_id}}">{{project.project_name}}</option>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Project Intro</label>
+
+              <div class="col-sm-10">
+                <textarea name="project_intro" ></textarea>
+              </div>
+            </div>
+
+
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-info pull-right">Submit</button>
+          </div>
+          <!-- /.box-footer -->
+        </form>
+      </div>
+      <!-- /.box -->
+      <!-- general form elements disabled -->
+      <!-- /.box -->
+    </div>
+    <!--/.col (right) -->
+  </div>
+  <!-- /.row -->
+</section>
+
+{% endblock context %}
